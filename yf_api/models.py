@@ -14,6 +14,8 @@ class Interval(Enum):
 
 
 class TimeRange(Enum):
+    MINUTE_15 = '15m'
+    MINUTE_30 = '30m'
     HOUR = '1h'
     DAY = '1d'
     DAY_5 = '5d'

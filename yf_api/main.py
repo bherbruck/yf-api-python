@@ -12,15 +12,16 @@ API_URL = 'https://query1.finance.yahoo.com/v8/finance/chart/'
 def get_quotes(symbol: str,
                interval: Union[Interval, str] = Interval.DAY,
                time_range: Union[TimeRange, str] = TimeRange.MONTH,
-               include_after_market: bool = True) -> List[Dict]:
+               include_after_market: bool = False) -> List[Dict]:
     url = urljoin(API_URL, symbol)
     response = get(url, params={'interval': enum_str(interval),
                                 'range': enum_str(time_range),
-                                'includePrePost': include_after_market}).json()
-    error = response['chart']['error']
+                                'includePrePost': include_after_market})
+    response_data = response.json()
+    error = response_data['chart']['error']
     if error is not None:
         raise Exception(error['description'])
-    data = parse_response(response)
+    data = parse_response(response_data)
     return data
 
 
